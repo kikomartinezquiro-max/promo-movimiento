@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocolo Integrativo de Movimiento · Kiko Martínez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5EDDF;
+  --cream-dark: #E8DCC6;
+  --cream-warm: #EFE2CC;
+  --espresso: #0B0703;
+  --espresso-soft: #1A0F08;
+  --bronze: #2D1E10;
+  --gold: #C9A961;
+  --gold-bright: #DBC077;
+  --gold-deep: #A88B47;
+  --burgundy: #6B2737;
+  --burgundy-soft: #8B3A4A;
+  --text: #1A0F08;
+  --text-soft: #4A3826;
+  --text-muted: #8B7355;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  line-height:1.7;
+  font-size:16px;
+  font-weight:400;
+  letter-spacing:0.01em;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* Textura grain sutil de fondo */
+body::before {
+  content:'';
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  pointer-events:none;
+  z-index:1;
+  opacity:0.4;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight:500;
+  line-height:1.15;
+  letter-spacing:-0.015em;
+}
+p { margin-bottom:16px; }
+
+/* ============ REPRODUCTOR MUSICA ============ */
+.music-player {
+  position:fixed;
+  bottom:28px;
+  right:28px;
+  background: rgba(11,7,3,0.92);
+  color:var(--cream);
+  padding:14px 22px 14px 16px;
+  border-radius:60px;
+  border:1px solid rgba(201,169,97,0.4);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  z-index:9999;
+  font-size:13px;
+  backdrop-filter: blur(12px);
+  cursor:pointer;
+  transition: all 0.3s ease;
+  max-width: 300px;
+}
+.music-player:hover { transform: translateY(-3px); box-shadow: 0 18px 50px rgba(0,0,0,0.45); border-color:var(--gold); }
+.music-btn {
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%);
+  color:var(--espresso);
+  border:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  flex-shrink:0;
+  font-weight:bold;
+}
+.music-info { line-height:1.3; font-family:'Inter',sans-serif; }
+.music-info .music-label {
+  font-size:9px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:block;
+  font-weight:600;
+  margin-bottom:2px;
+}
+.music-info .music-title {
+  font-size:12px;
+  color:var(--cream);
+  font-weight:400;
+}
+
+/* ============ HERO PREMIUM ============ */
+.hero {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(201,169,97,0.08) 0%, transparent 50%),
+    linear-gradient(180deg, var(--espresso) 0%, var(--espresso-soft) 60%, var(--bronze) 100%);
+  color:var(--cream);
+  padding: 120px max(28px, calc((100% - 1100px) / 2)) 100px;
+  width:100%;
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  min-height: 95vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:2;
+}
+.hero::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  opacity:0.6;
+  pointer-events:none;
+}
+.hero::after {
+  content:'';
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:200px;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 100%);
+  pointer-events:none;
+}
+.hero-content {
+  position:relative;
+  z-index:3;
+  max-width:920px;
+  margin:0 auto;
+}
+.hero-ornament {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  margin-bottom:36px;
+}
+.hero-ornament-line {
+  width:80px;
+  height:1px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 50%, transparent 100%);
+}
+.hero-ornament-diamond {
+  width:6px;
+  height:6px;
+  background:var(--gold);
+  transform:rotate(45deg);
+}
+.hero-eyebrow {
+  display:inline-block;
+  font-family:'Inter', sans-serif;
+  font-size:11px;
+  letter-spacing:6px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:48px;
+  font-weight:500;
+}
+.hero h1 {
+  font-family:'Playfair Display', serif;
+  font-size: clamp(46px, 7.5vw, 96px);
+  margin-bottom:36px;
+  color:var(--cream);
+  font-weight:500;
+  letter-spacing:-0.025em;
+  line-height:1.05;
+}
+.hero h1 .italic-accent {
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic;
+  font-weight:500;
+  color:var(--gold-bright);
+  font-size:1.05em;
+}
+.hero-sub {
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(20px, 2.4vw, 26px);
+  color:rgba(245,237,223,0.85);
+  max-width:680px;
+  margin:0 auto 56px;
+  line-height:1.55;
+  font-weight:400;
+  letter-spacing:0.005em;
+}
+.hero-hook {
+  display:inline-block;
+  margin-bottom:50px;
+  padding:18px 36px;
+  border-top:1px solid rgba(201,169,97,0.35);
+  border-bottom:1px solid rgba(201,169,97,0.35);
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  color:var(--gold-bright);
+  font-size: clamp(17px, 2vw, 22px);
+  letter-spacing:0.05em;
+  font-weight:400;
+}
+.hero-discover {
+  margin-top:48px;
+  margin-bottom:0;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(34px, 5.5vw, 58px);
+  color:var(--cream);
+  letter-spacing:14px;
+  text-transform:uppercase;
+  font-weight:400;
+  animation: pulseGlow 3s ease-in-out infinite;
+  padding-left:14px;
+}
+@keyframes pulseGlow {
+  0%, 100% { text-shadow: 0 0 18px rgba(201,169,97,0.35); opacity:0.92; }
+  50% { text-shadow: 0 0 38px rgba(201,169,97,0.75), 0 0 80px rgba(201,169,97,0.25); opacity:1; }
+}
+.hero-credentials {
+  margin-top:70px;
+  padding-top:32px;
+  border-top:1px solid rgba(201,169,97,0.18);
+  font-family:'Inter',sans-serif;
+  font-size:10px;
+  color:var(--text-muted);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  font-weight:500;
+}
+.scroll-indicator {
+  position:absolute;
+  bottom:36px;
+  left:50%;
+  transform:translateX(-50%);
+  color:var(--gold);
+  font-size:20px;
+  animation: bounce 2.4s infinite;
+  z-index:3;
+  letter-spacing:8px;
+}
+@keyframes bounce {
+  0%,100% { transform:translateX(-50%) translateY(0); opacity:0.5; }
+  50% { transform:translateX(-50%) translateY(12px); opacity:1; }
+}
+
+/* ============ SECTIONS ============ */
+section {
+  padding: 110px max(28px, calc((100% - 1100px) / 2));
+  width:100%;
+  box-sizing:border-box;
+  position:relative;
+  z-index:2;
+}
+.section-eyebrow {
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  font-family:'Inter',sans-serif;
+  font-size:11px;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  color:var(--gold-deep);
+  margin-bottom:24px;
+  font-weight:600;
+}
+.section-eyebrow::before {
+  content:'';
+  width:30px;
+  height:1px;
+  background:var(--gold-deep);
+}
+.section-title {
+  font-family:'Playfair Display', serif;
+  font-size: clamp(34px, 5vw, 56px);
+  margin-bottom:28px;
+  color:var(--text);
+  max-width:850px;
+  font-weight:500;
+  letter-spacing:-0.02em;
+  line-height:1.12;
+}
+.section-title .italic-accent {
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic;
+  font-weight:500;
+  color:var(--gold-deep);
+}
+.section-intro {
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(19px, 2.1vw, 23px);
+  color:var(--text-soft);
+  max-width:760px;
+  margin-bottom:60px;
+  line-height:1.6;
+  font-weight:400;
+}
+
+/* ============ ALARMA SEDENTARISMO ============ */
+.alarma { background: linear-gradient(180deg, var(--cream) 0%, var(--cream-warm) 100%); }
+.big-stat {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap:28px;
+  margin-bottom:60px;
+}
+.stat-card {
+  background:#fff;
+  padding:44px 32px;
+  border-radius:2px;
+  border-top:3px solid var(--gold);
+  box-shadow: 0 1px 3px rgba(11,7,3,0.04), 0 12px 40px rgba(11,7,3,0.06);
+  position:relative;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.stat-card:hover { transform:translateY(-6px); box-shadow: 0 2px 6px rgba(11,7,3,0.04), 0 24px 60px rgba(11,7,3,0.12); }
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size:72px;
+  color:var(--gold-deep);
+  display:block;
+  line-height:0.95;
+  margin-bottom:18px;
+  font-weight:500;
+  letter-spacing:-0.04em;
+}
+.stat-label {
+  font-family:'Inter',sans-serif;
+  font-size:11px;
+  color:var(--text);
+  text-transform:uppercase;
+  letter-spacing:3px;
+  margin-bottom:14px;
+  font-weight:600;
+}
+.stat-desc {
+  font-family:'Cormorant Garamond', serif;
+  font-size:17px;
+  color:var(--text-soft);
+  line-height:1.5;
+  font-weight:400;
+}
+.stat-source {
+  display:block;
+  margin-top:16px;
+  font-family:'Inter',sans-serif;
+  font-size:10px;
+  color:var(--text-muted);
+  font-style:italic;
+  letter-spacing:0.5px;
+}
+
+/* ============ GRÁFICOS ============ */
+.chart-wrapper {
+  background:#fff;
+  padding:50px 40px;
+  border-radius:2px;
+  margin:50px 0;
+  box-shadow: 0 1px 3px rgba(11,7,3,0.04), 0 20px 60px rgba(11,7,3,0.08);
+  border:1px solid rgba(201,169,97,0.12);
+}
+.chart-title {
+  font-family: 'Playfair Display', serif;
+  font-size:28px;
+  color:var(--text);
+  margin-bottom:10px;
+  font-weight:500;
+}
+.chart-subtitle {
+  font-family:'Cormorant Garamond', serif;
+  font-size:17px;
+  color:var(--text-muted);
+  margin-bottom:34px;
+  font-style:italic;
+}
+
+.bar-chart { margin-top:24px; }
+.bar-item { margin-bottom:26px; }
+.bar-label {
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+  font-size:14px;
+  color:var(--text);
+  gap:10px;
+  font-family:'Inter',sans-serif;
+  font-weight:500;
+}
+.bar-label strong {
+  color:var(--gold-deep);
+  font-size:15px;
+  white-space:nowrap;
+  font-family:'Playfair Display',serif;
+  font-weight:600;
+}
+.bar-track {
+  background:var(--cream-dark);
+  height:28px;
+  border-radius:2px;
+  overflow:hidden;
+  position:relative;
+}
+.bar-fill {
+  height:100%;
+  background: linear-gradient(90deg, var(--gold-deep) 0%, var(--gold) 50%, var(--gold-bright) 100%);
+  border-radius:2px;
+  display:flex;
+  align-items:center;
+  padding-left:14px;
+  color:#fff;
+  font-size:11px;
+  font-weight:600;
+  white-space:nowrap;
+  font-family:'Inter',sans-serif;
+  letter-spacing:0.5px;
+}
+
+.donuts {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap:28px;
+  margin:36px 0;
+}
+.donut-item { text-align:center; }
+.donut-svg { width:170px; height:170px; margin:0 auto 20px; display:block; }
+.donut-bg { fill:none; stroke:var(--cream-dark); stroke-width:12; }
+.donut-fg {
+  fill:none;
+  stroke:url(#goldGradient);
+  stroke-width:12;
+  stroke-linecap:round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+.donut-text {
+  font-family: 'Playfair Display', serif;
+  font-size:24px;
+  fill:var(--text);
+  text-anchor:middle;
+  dominant-baseline:middle;
+  font-weight:500;
+}
+.donut-label {
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  color:var(--text);
+  font-weight:500;
+  margin-bottom:8px;
+}
+.donut-desc {
+  font-family:'Cormorant Garamond', serif;
+  font-size:15px;
+  color:var(--text-soft);
+  padding:0 12px;
+  font-style:italic;
+}
+
+/* ============ ENFERMEDADES PREVENIDAS ============ */
+.prevenidas {
+  background:
+    radial-gradient(ellipse at 30% 0%, rgba(201,169,97,0.06) 0%, transparent 50%),
+    var(--espresso);
+  color:var(--cream);
+}
+.prevenidas .section-title { color:var(--cream); }
+.prevenidas .section-title .italic-accent { color:var(--gold-bright); }
+.prevenidas .section-intro { color:rgba(245,237,223,0.78); }
+.prevenidas .section-eyebrow { color:var(--gold); }
+.prevenidas .section-eyebrow::before { background:var(--gold); }
+.disease-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap:24px;
+  margin-top:50px;
+}
+.disease-card {
+  background: rgba(201,169,97,0.04);
+  border:1px solid rgba(201,169,97,0.18);
+  padding:36px 28px;
+  border-radius:2px;
+  transition: all 0.4s ease;
+  position:relative;
+}
+.disease-card:hover {
+  transform:translateY(-6px);
+  background: rgba(201,169,97,0.1);
+  border-color:rgba(201,169,97,0.4);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+.disease-icon {
+  width:54px; height:54px;
+  background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%);
+  color:var(--espresso);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  margin-bottom:22px;
+}
+.disease-name {
+  font-family: 'Playfair Display', serif;
+  font-size:22px;
+  color:var(--gold-bright);
+  margin-bottom:14px;
+  font-weight:500;
+}
+.disease-reduction {
+  display:inline-block;
+  background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%);
+  color:var(--espresso);
+  padding:8px 16px;
+  border-radius:2px;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:16px;
+  font-family:'Inter',sans-serif;
+  letter-spacing:1px;
+}
+.disease-text {
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;
+  color:rgba(245,237,223,0.85);
+  line-height:1.55;
+}
+
+/* ============ MENOPAUSIA ============ */
+.menopausia { background: linear-gradient(135deg, var(--cream) 0%, #EBD7CA 100%); }
+.meno-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:60px;
+  align-items:start;
+  margin-top:50px;
+}
+@media (max-width:880px) { .meno-grid { grid-template-columns: 1fr; gap:40px; } }
+.meno-text h3 {
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+  color:var(--text);
+  margin-bottom:20px;
+  border-left:2px solid var(--gold);
+  padding-left:20px;
+  font-weight:500;
+}
+.meno-text p {
+  font-family:'Cormorant Garamond',serif;
+  color:var(--text-soft);
+  margin-bottom:16px;
+  font-size:18px;
+  line-height:1.6;
+}
+.meno-text p strong { color:var(--text); font-weight:600; }
+.meno-stats {
+  background:#fff;
+  padding:42px 34px;
+  border-radius:2px;
+  box-shadow: 0 1px 3px rgba(11,7,3,0.04), 0 20px 60px rgba(11,7,3,0.08);
+  border:1px solid rgba(201,169,97,0.12);
+}
+.meno-stat-row {
+  display:grid;
+  grid-template-columns: 120px 1fr;
+  gap:24px;
+  align-items:center;
+  padding:26px 0;
+  border-bottom:1px solid var(--cream-dark);
+}
+.meno-stat-row:last-child { border-bottom:none; }
+.meno-stat-row:first-child { padding-top:0; }
+.meno-stat-num {
+  font-family:'Playfair Display',serif;
+  font-size:42px;
+  color:var(--gold-deep);
+  font-weight:500;
+  line-height:1.05;
+  text-align:center;
+  letter-spacing:-0.03em;
+}
+.meno-stat-num.smaller {
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;
+  line-height:1.25;
+  font-style:italic;
+  font-weight:600;
+}
+.meno-stat-num .arrow { display:block; font-size:24px; margin-bottom:2px; }
+.meno-stat-text {
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;
+  color:var(--text);
+  line-height:1.55;
+}
+.meno-stat-text strong { color:var(--text); font-weight:600; }
+
+/* ============ ENVEJECIMIENTO ============ */
+.envejecimiento { background:var(--cream-warm); }
+.envej-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap:28px;
+  margin-top:50px;
+}
+.envej-card {
+  background:#fff;
+  padding:42px 32px;
+  border-radius:2px;
+  box-shadow: 0 1px 3px rgba(11,7,3,0.04), 0 16px 50px rgba(11,7,3,0.07);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border:1px solid rgba(201,169,97,0.1);
+}
+.envej-card:hover { transform:translateY(-6px); box-shadow: 0 2px 6px rgba(11,7,3,0.04), 0 28px 70px rgba(11,7,3,0.13); }
+.envej-card-num {
+  font-family:'Playfair Display',serif;
+  font-size:64px;
+  color:var(--gold-deep);
+  font-weight:500;
+  line-height:0.95;
+  margin-bottom:18px;
+  letter-spacing:-0.04em;
+}
+.envej-card h4 {
+  font-family:'Playfair Display',serif;
+  font-size:21px;
+  color:var(--text);
+  margin-bottom:12px;
+  font-weight:500;
+}
+.envej-card p {
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;
+  color:var(--text-soft);
+  margin:0;
+  line-height:1.55;
+}
+
+/* ============ MENTAL ============ */
+.mental { background: linear-gradient(180deg, var(--cream) 0%, var(--cream-warm) 100%); }
+.mental-hero {
+  display:grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap:60px;
+  align-items:center;
+  margin-top:40px;
+}
+@media (max-width:880px) { .mental-hero { grid-template-columns: 1fr; gap:40px; } }
+.mental-text p {
+  font-family:'Cormorant Garamond',serif;
+  color:var(--text-soft);
+  font-size:19px;
+  line-height:1.6;
+}
+.mental-text p strong { color:var(--text); font-weight:600; }
+.mental-quote {
+  background: linear-gradient(135deg, var(--espresso) 0%, var(--bronze) 100%);
+  color:var(--cream);
+  padding:50px 40px;
+  border-radius:2px;
+  position:relative;
+  box-shadow: 0 24px 60px rgba(11,7,3,0.25);
+}
+.mental-quote::before {
+  content:'"';
+  position:absolute;
+  top:-28px; left:24px;
+  font-family:'Playfair Display',serif;
+  font-size:120px;
+  color:var(--gold);
+  line-height:1;
+  font-weight:700;
+}
+.mental-quote p {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:22px;
+  line-height:1.55;
+  color:var(--cream);
+  margin-bottom:22px;
+  font-weight:400;
+}
+.mental-quote cite {
+  display:block;
+  font-family:'Inter',sans-serif;
+  font-size:11px;
+  color:var(--gold);
+  font-style:normal;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  font-weight:500;
+}
+
+/* ============ PROTOCOLO ============ */
+.protocolo {
+  background:
+    radial-gradient(ellipse at 70% 30%, rgba(201,169,97,0.08) 0%, transparent 60%),
+    linear-gradient(135deg, var(--espresso) 0%, var(--espresso-soft) 50%, var(--bronze) 100%);
+  color:var(--cream);
+}
+.protocolo .section-eyebrow { color:var(--gold); }
+.protocolo .section-eyebrow::before { background:var(--gold); }
+.protocolo .section-title { color:var(--cream); max-width:none; }
+.protocolo .section-title .italic-accent { color:var(--gold-bright); }
+.protocolo .section-intro { color:rgba(245,237,223,0.78); }
+
+.proto-intro {
+  background: rgba(201,169,97,0.06);
+  border-left:2px solid var(--gold);
+  padding:40px 40px;
+  border-radius:0;
+  margin:40px 0 60px;
+  position:relative;
+}
+.proto-intro p {
+  color:var(--cream);
+  font-size:20px;
+  line-height:1.7;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  margin:0;
+  font-weight:400;
+}
+.proto-intro p strong {
+  color:var(--gold-bright);
+  font-style:normal;
+  font-family:'Playfair Display',serif;
+  font-weight:500;
+}
+
+.pilares-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap:24px;
+  margin:50px 0;
+}
+.pilar-card {
+  background: rgba(245,237,223,0.04);
+  border:1px solid rgba(201,169,97,0.25);
+  padding:38px 28px;
+  border-radius:2px;
+  transition: all 0.4s ease;
+}
+.pilar-card:hover {
+  background: rgba(245,237,223,0.08);
+  transform:translateY(-6px);
+  border-color:rgba(201,169,97,0.5);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+.pilar-num {
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:48px;
+  color:var(--gold);
+  font-weight:500;
+  margin-bottom:14px;
+  line-height:1;
+}
+.pilar-name {
+  font-family:'Playfair Display',serif;
+  font-size:22px;
+  color:var(--cream);
+  margin-bottom:16px;
+  font-weight:500;
+}
+.pilar-desc {
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;
+  color:rgba(245,237,223,0.82);
+  line-height:1.6;
+}
+
+.incluye-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap:18px;
+  margin-top:36px;
+  background: rgba(245,237,223,0.04);
+  padding:40px;
+  border-radius:2px;
+  border:1px solid rgba(201,169,97,0.15);
+}
+.incluye-item {
+  display:flex;
+  align-items:start;
+  gap:14px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;
+  color:rgba(245,237,223,0.88);
+  line-height:1.45;
+}
+.incluye-check {
+  color:var(--gold);
+  font-weight:bold;
+  font-size:18px;
+  line-height:1.2;
+  flex-shrink:0;
+}
+
+/* ============ MENSAJE KIKO ============ */
+.mensaje {
+  background: linear-gradient(135deg, var(--cream) 0%, var(--cream-warm) 100%);
+  text-align:center;
+  position:relative;
+}
+.mensaje-content { max-width:780px; margin:0 auto; }
+.mensaje .section-eyebrow { justify-content:center; }
+.mensaje .section-eyebrow { display:inline-flex; }
+.mensaje .section-title { margin:0 auto 36px; text-align:center; }
+.mensaje-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 2.4vw, 26px);
+  color:var(--text-soft);
+  line-height:1.7;
+  font-style:italic;
+  margin-bottom:36px;
+  font-weight:400;
+}
+.mensaje-text strong {
+  color:var(--text);
+  font-weight:600;
+  font-style:normal;
+  font-family:'Playfair Display',serif;
+}
+.mensaje-ornament {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  margin:36px 0;
+}
+.mensaje-ornament-line {
+  width:60px;
+  height:1px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 50%, transparent 100%);
+}
+.mensaje-ornament-diamond {
+  width:6px;
+  height:6px;
+  background:var(--gold);
+  transform:rotate(45deg);
+}
+.mensaje-firma {
+  font-family: 'Playfair Display', serif;
+  font-size:26px;
+  color:var(--text);
+  margin-top:24px;
+  font-style:italic;
+  font-weight:500;
+}
+.mensaje-firma span {
+  display:block;
+  font-family:'Inter',sans-serif;
+  font-size:11px;
+  color:var(--text-muted);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  margin-top:10px;
+  font-style:normal;
+  font-weight:500;
+}
+
+/* ============ CTA FINAL ============ */
+.cta-final {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201,169,97,0.08) 0%, transparent 60%),
+    var(--espresso);
+  color:var(--cream);
+  text-align:center;
+  padding:120px 28px;
+  position:relative;
+}
+.cta-final h2 {
+  font-family:'Playfair Display',serif;
+  font-size: clamp(36px, 5vw, 56px);
+  color:var(--cream);
+  margin-bottom:24px;
+  font-weight:500;
+}
+.cta-final h2 .italic-accent {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  color:var(--gold-bright);
+}
+.cta-final p {
+  font-family:'Cormorant Garamond',serif;
+  font-size:21px;
+  color:rgba(245,237,223,0.82);
+  max-width:620px;
+  margin:0 auto 48px;
+  font-style:italic;
+  font-weight:400;
+}
+
+.cta-contact {
+  margin: 0 auto 48px;
+  text-align:center;
+}
+.cta-contact-label {
+  font-family:'Inter',sans-serif;
+  font-size:11px;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:20px;
+  font-weight:600;
+}
+.cta-contact-phone {
+  display:inline-block;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(38px, 6vw, 64px);
+  color:var(--cream);
+  text-decoration:none;
+  letter-spacing:6px;
+  font-weight:500;
+  padding-bottom:12px;
+  border-bottom:1px solid rgba(201,169,97,0.35);
+  transition: color 0.4s, border-color 0.4s, letter-spacing 0.4s;
+}
+.cta-contact-phone:hover {
+  color:var(--gold-bright);
+  border-bottom-color:var(--gold-bright);
+  letter-spacing:8px;
+}
+
+.cta-buttons { display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
+.btn-secondary {
+  background:transparent;
+  color:var(--gold);
+  padding:16px 36px;
+  font-family:'Inter',sans-serif;
+  font-size:12px;
+  font-weight:600;
+  text-decoration:none;
+  border-radius:2px;
+  letter-spacing:3px;
+  border:1px solid var(--gold);
+  transition: all 0.3s;
+  cursor:pointer;
+  text-transform:uppercase;
+}
+.btn-secondary:hover { background:var(--gold); color:var(--espresso); }
+
+footer {
+  background:#070401;
+  color:var(--text-muted);
+  text-align:center;
+  padding:50px 28px;
+  font-family:'Inter',sans-serif;
+  font-size:12px;
+  letter-spacing:1px;
+}
+footer p { margin-bottom:8px; }
+footer strong { color:var(--gold); font-family:'Playfair Display',serif; font-weight:500; font-size:14px; letter-spacing:2px; }
+
+/* ============ PRINT ============ */
+@media print {
+  .music-player, .scroll-indicator { display:none !important; }
+  body { background:#fff; font-size:11pt; }
+  body::before { display:none; }
+  .hero, .protocolo, .cta-final { background:#fff !important; color:#000 !important; }
+  .hero { min-height:auto; padding:40px 20px; }
+  .hero h1, .protocolo .section-title, .cta-final h2,
+  .prevenidas .section-title, .mensaje-text, .pilar-name,
+  .hero-hook, .hero-discover { color:#000 !important; }
+  .prevenidas { background:#f5f5f5 !important; }
+  .prevenidas .section-intro, .pilar-desc, .mental-quote p,
+  .incluye-item, .cta-final p, .hero-sub, .proto-intro p,
+  .disease-text { color:#222 !important; }
+  .stat-card, .chart-wrapper, .envej-card, .meno-stats, .disease-card,
+  .pilar-card, .incluye-grid, .proto-intro, .mental-quote {
+    box-shadow:none !important;
+    border:1px solid #ddd;
+    page-break-inside: avoid;
+  }
+  .mental-quote { background:#f5f5f5 !important; }
+  .mental-quote p, .mensaje-firma, .cta-contact-phone { color:#000 !important; }
+  section { padding:30px 20px; }
+  a { color:#000 !important; text-decoration:none; }
+  .cta-buttons, .btn-secondary { display:none; }
+  h1, h2, h3 { page-break-after: avoid; }
+}
+
+@media (max-width:780px) {
+  section { padding:70px 24px; }
+  .hero { padding:90px 24px; min-height:auto; }
+  .music-player { bottom:16px; right:16px; padding:10px 18px 10px 14px; max-width:230px; }
+  .music-info .music-title { font-size:11px; }
+  .stat-number { font-size:58px; }
+  .envej-card-num { font-size:54px; }
+  .hero-discover { letter-spacing:8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SVG con gradiente para los donuts -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A88B47"/>
+      <stop offset="50%" style="stop-color:#C9A961"/>
+      <stop offset="100%" style="stop-color:#DBC077"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ============ REPRODUCTOR DE MÚSICA ============ -->
+<div class="music-player" id="musicPlayer" onclick="toggleMusic()">
+  <button class="music-btn" id="musicBtn" type="button">▶</button>
+  <div class="music-info">
+    <span class="music-label">Ambiente</span>
+    <span class="music-title" id="musicTitle">Música para acompañar la lectura</span>
+  </div>
+</div>
+<audio id="bgMusic" loop preload="none">
+  <source src="musica/ambiente.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ============ HERO PREMIUM ============ -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-ornament">
+      <div class="hero-ornament-line"></div>
+      <div class="hero-ornament-diamond"></div>
+      <div class="hero-ornament-line"></div>
+    </div>
+    <span class="hero-eyebrow">Bienestar Natural · Movimiento Consciente</span>
+    <h1>Conoce <span class="italic-accent">lo terrible</span><br>de las cifras</h1>
+    <p class="hero-sub">
+      El sedentarismo es la pandemia silenciosa del siglo XXI. Lo que la OMS y la ciencia están descubriendo cambiará para siempre tu manera de ver el movimiento.
+    </p>
+    <div class="hero-hook">Te lo cuento a continuación</div>
+    <p class="hero-discover">Descúbrelo</p>
+    <div class="hero-credentials">Kiko Martínez · Osteopatía · Coaching · Fitoterapia · Bienestar Integral</div>
+  </div>
+  <div class="scroll-indicator">▼ ▼ ▼</div>
+</header>
+
+<!-- ============ ALARMA SEDENTARISMO ============ -->
+<section class="alarma" id="alarma">
+  <span class="section-eyebrow">La realidad que la OMS quiere que conozcas</span>
+  <h2 class="section-title">El sedentarismo es la <span class="italic-accent">pandemia silenciosa</span> del siglo XXI</h2>
+  <p class="section-intro">
+    No es exagerado: la inactividad física mata. La OMS estima que en 2024 había <strong>1.800 millones de adultos en riesgo de enfermar</strong> por no moverse lo suficiente. Y la tendencia empeora cada año.
+  </p>
+
+  <div class="big-stat">
+    <div class="stat-card">
+      <span class="stat-number">1.800<sup style="font-size:0.4em">M</sup></span>
+      <span class="stat-label">Personas en riesgo</span>
+      <p class="stat-desc">Adultos en todo el mundo corren riesgo de enfermar por falta de actividad física, según la OMS (2024).</p>
+      <span class="stat-source">Fuente: Organización Mundial de la Salud, 2024</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">31<sup style="font-size:0.4em">%</sup></span>
+      <span class="stat-label">Adultos sedentarios</span>
+      <p class="stat-desc">No cumplen las recomendaciones mínimas de actividad física semanal (150 min moderada / 75 min intensa).</p>
+      <span class="stat-source">Fuente: OMS, hoja informativa actividad física</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">80<sup style="font-size:0.4em">%</sup></span>
+      <span class="stat-label">Adolescentes inactivos</span>
+      <p class="stat-desc">8 de cada 10 jóvenes no se mueven lo necesario para un desarrollo saludable. Una generación en riesgo.</p>
+      <span class="stat-source">Fuente: OMS, 2024</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">+35<sup style="font-size:0.4em">%</sup></span>
+      <span class="stat-label">Aumento previsto</span>
+      <p class="stat-desc">Crecimiento previsto del sedentarismo de aquí a 2030 si no cambiamos los hábitos.</p>
+      <span class="stat-source">Fuente: OMS / OPS, 2024</span>
+    </div>
+  </div>
+
+  <div class="chart-wrapper">
+    <h3 class="chart-title">Riesgo de mortalidad: activos vs. sedentarios</h3>
+    <p class="chart-subtitle">Las personas que no hacen suficiente ejercicio presentan un riesgo de mortalidad entre un 20% y un 30% superior al de las personas activas.</p>
+    <div class="bar-chart">
+      <div class="bar-item">
+        <div class="bar-label"><span>Personas activas (cumplen recomendaciones OMS)</span><strong>Riesgo base</strong></div>
+        <div class="bar-track"><div class="bar-fill" style="width:40%">Mortalidad base</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>Personas sedentarias</span><strong>+30%</strong></div>
+        <div class="bar-track"><div class="bar-fill" style="width:70%; background:linear-gradient(90deg, #6B2737 0%, #8B3A4A 50%, #A14958 100%)">+30% más riesgo de mortalidad</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label"><span>Inactividad física en mortalidad mundial</span><strong>4º factor de riesgo</strong></div>
+        <div class="bar-track"><div class="bar-fill" style="width:30%; background:linear-gradient(90deg, #8B7355 0%, #A08665 100%)">6% defunciones mundiales</div></div>
+      </div>
+    </div>
+    <p style="font-family:'Cormorant Garamond',serif; font-size:15px; color:var(--text-muted); margin-top:24px; font-style:italic;">La inactividad física es el cuarto factor de riesgo de mortalidad más importante del mundo, solo superado por la hipertensión, el tabaco y la hiperglucemia (OMS).</p>
+  </div>
+</section>
+
+<!-- ============ ENFERMEDADES PREVENIDAS ============ -->
+<section class="prevenidas">
+  <span class="section-eyebrow">Lo que el movimiento previene</span>
+  <h2 class="section-title">Una sola medicina,<br><span class="italic-accent">decenas</span> de enfermedades prevenidas</h2>
+  <p class="section-intro">
+    Si el ejercicio fuera una pastilla, sería el medicamento más recetado del planeta. La evidencia científica es abrumadora: estos son los porcentajes reales de reducción de riesgo según los principales estudios internacionales.
+  </p>
+
+  <div class="disease-grid">
+    <div class="disease-card">
+      <div class="disease-icon">❤</div>
+      <h3 class="disease-name">Mortalidad cardiovascular</h3>
+      <span class="disease-reduction">–40%</span>
+      <p class="disease-text">150-300 min de actividad moderada a la semana reducen un 40% la mortalidad por enfermedad cardiovascular (Estudio liderado por la Universidad Autónoma de Madrid).</p>
+    </div>
+    <div class="disease-card">
+      <div class="disease-icon">⚕</div>
+      <h3 class="disease-name">Mortalidad total</h3>
+      <span class="disease-reduction">–31%</span>
+      <p class="disease-text">Cumplir las recomendaciones mínimas de la OMS reduce la mortalidad por cualquier causa en un 31% (Canadian Medical Association Journal).</p>
+    </div>
+    <div class="disease-card">
+      <div class="disease-icon">🧠</div>
+      <h3 class="disease-name">Alzheimer y demencia</h3>
+      <span class="disease-reduction">–50%</span>
+      <p class="disease-text">El ejercicio físico puede reducir hasta un 50% el riesgo de padecer Alzheimer y casi a la mitad el riesgo global de demencia (Universidad de Boston, JAMA Network).</p>
+    </div>
+    <div class="disease-card">
+      <div class="disease-icon">🎗</div>
+      <h3 class="disease-name">Cáncer</h3>
+      <span class="disease-reduction">–30%</span>
+      <p class="disease-text">La actividad física regular reduce casi un 30% la mortalidad por cáncer (estudio David Martínez Gómez, UAM). Especial impacto en cáncer de mama y colon (OMS).</p>
+    </div>
+    <div class="disease-card">
+      <div class="disease-icon">💉</div>
+      <h3 class="disease-name">Diabetes tipo 2</h3>
+      <span class="disease-reduction">Prevención</span>
+      <p class="disease-text">El sedentarismo aumenta significativamente el riesgo de desarrollar diabetes tipo 2. El ejercicio mejora la sensibilidad a la insulina y previene la enfermedad (OMS).</p>
+    </div>
+    <div class="disease-card">
+      <div class="disease-icon">🧘</div>
+      <h3 class="disease-name">Depresión y ansiedad</h3>
+      <span class="disease-reduction">Mejora p&lt;0.001</span>
+      <p class="disease-text">El ejercicio estructurado disminuye significativamente los síntomas depresivos y ansiosos, y el 80% de pacientes con dolor crónico reporta mejoras psicológicas tras el ejercicio.</p>
+    </div>
+    <div class="disease-card">
+      <div class="disease-icon">🦴</div>
+      <h3 class="disease-name">Osteoporosis</h3>
+      <span class="disease-reduction">Prevención</span>
+      <p class="disease-text">Tras la menopausia se pierde entre un 1% y un 2,5% de masa ósea cada año. El ejercicio de fuerza previene esta pérdida y mejora la mineralización ósea (INEF-UPM).</p>
+    </div>
+    <div class="disease-card">
+      <div class="disease-icon">💪</div>
+      <h3 class="disease-name">Sarcopenia (pérdida muscular)</h3>
+      <span class="disease-reduction">Reversible</span>
+      <p class="disease-text">A partir de los 65 años se pierde un 1,4% de masa muscular y hasta un 2,5% de fuerza por año. El entrenamiento de fuerza lo revierte (Grupo Europeo de Trabajo sobre Sarcopenia).</p>
+    </div>
+  </div>
+
+  <p style="margin-top:50px; font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--gold-bright); text-align:center; font-style:italic; max-width:820px; margin-left:auto; margin-right:auto;">
+    Y aún más: implementar políticas de actividad física podría evitar 500 millones de nuevos casos de enfermedades crónicas y ahorrar 300.000 millones de dólares en sanidad pública en una década <em style="color:var(--gold)">— OMS</em>
+  </p>
+</section>
+
+<!-- ============ MENOPAUSIA ============ -->
+<section class="menopausia">
+  <span class="section-eyebrow">Para ellas, en una etapa decisiva</span>
+  <h2 class="section-title">Menopausia y climaterio:<br>el ejercicio <span class="italic-accent">cambia el guion</span></h2>
+  <p class="section-intro">
+    La caída de estrógenos en la menopausia no es solo un cambio hormonal: es un cambio óseo, muscular, cardiovascular, cognitivo y emocional. Pero la ciencia es clara: el movimiento bien diseñado es la herramienta más eficaz para atravesar esta etapa con energía, fortaleza y calidad de vida.
+  </p>
+
+  <div class="meno-grid">
+    <div class="meno-text">
+      <h3>Lo que ocurre sin ejercicio</h3>
+      <p>Cada año tras la menopausia se pierde <strong>entre un 1% y un 2,5% de masa ósea</strong>. La sarcopenia se acelera. La grasa abdominal aumenta. El riesgo cardiovascular se dispara. El sueño se fragmenta. El estado de ánimo se resiente.</p>
+
+      <h3 style="margin-top:36px">Lo que cambia con un programa adecuado</h3>
+      <p>Los estudios muestran que las mujeres menopáusicas que practican actividad física con regularidad experimentan <strong>menos síntomas de ansiedad, depresión e insomnio</strong>. El ejercicio combinado —fuerza + aeróbico + movilidad— alivia los sofocos, mejora el sueño, protege los huesos, modula el peso y reduce el riesgo cardiovascular.</p>
+
+      <h3 style="margin-top:36px">No es opcional: es la mejor inversión</h3>
+      <p>La menopausia no tiene por qué ser una etapa de declive. Puede ser, con el movimiento adecuado, una oportunidad para adoptar los hábitos que definirán tus próximos 30 o 40 años de vida.</p>
+    </div>
+
+    <div class="meno-stats">
+      <div class="meno-stat-row">
+        <div class="meno-stat-num">2,5%</div>
+        <div class="meno-stat-text"><strong>Pérdida ósea anual</strong> tras la menopausia sin ejercicio. El ejercicio de fuerza lo previene.</div>
+      </div>
+      <div class="meno-stat-row">
+        <div class="meno-stat-num">–50%</div>
+        <div class="meno-stat-text"><strong>Reducción del riesgo de Alzheimer</strong> con ejercicio físico regular, especialmente relevante en mujeres postmenopáusicas.</div>
+      </div>
+      <div class="meno-stat-row">
+        <div class="meno-stat-num smaller"><span class="arrow">↓</span>Sofocos</div>
+        <div class="meno-stat-text">El ejercicio regular <strong>alivia los sofocos</strong>, la fatiga, el insomnio y los cambios de humor característicos del climaterio.</div>
+      </div>
+      <div class="meno-stat-row">
+        <div class="meno-stat-num smaller"><span class="arrow">↑</span>Ánimo</div>
+        <div class="meno-stat-text">Aumento de <strong>endorfinas y serotonina</strong>: mejora demostrada del estado de ánimo y del sueño en mujeres menopáusicas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENVEJECIMIENTO ============ -->
+<section class="envejecimiento">
+  <span class="section-eyebrow">Envejecer no es perder: es transformar</span>
+  <h2 class="section-title">Una vejez <span class="italic-accent">con autonomía</span><br>empieza moviéndose hoy</h2>
+  <p class="section-intro">
+    La masa y la fuerza muscular alcanzan su punto máximo entre los 20 y los 35 años. A partir de ahí, todo declive es <strong>opcional</strong>: depende de lo que hagas con tu cuerpo. El entrenamiento de fuerza, la movilidad y el equilibrio son la clave para no necesitar a nadie a los 80 años.
+  </p>
+
+  <div class="envej-grid">
+    <div class="envej-card">
+      <div class="envej-card-num">1,4%</div>
+      <h4>Pérdida muscular anual</h4>
+      <p>A partir de los 65 años, los adultos pierden de media un 1,4% de masa muscular al año si no entrenan fuerza. Acumulado: una catástrofe funcional.</p>
+    </div>
+    <div class="envej-card">
+      <div class="envej-card-num">50%</div>
+      <h4>Sarcopenia en +80 años</h4>
+      <p>Entre el 5% y el 13% de los adultos de 60-70 años presentan sarcopenia. Esta cifra alcanza el 50% en mayores de 80. Es prevenible y reversible.</p>
+    </div>
+    <div class="envej-card">
+      <div class="envej-card-num">200<sup style="font-size:0.45em">M</sup></div>
+      <h4>Personas afectadas</h4>
+      <p>En las próximas cuatro décadas, más de 200 millones de personas vivirán con sarcopenia en el mundo si no cambiamos los hábitos.</p>
+    </div>
+    <div class="envej-card">
+      <div class="envej-card-num">30%</div>
+      <h4>Movilidad reducida</h4>
+      <p>Cerca del 30% de los adultos mayores de 70 años presentan dificultades de movilidad. El ejercicio multicomponente lo previene y revierte.</p>
+    </div>
+  </div>
+
+  <div class="chart-wrapper" style="margin-top:60px">
+    <h3 class="chart-title">El movimiento como prescripción médica para la longevidad</h3>
+    <p class="chart-subtitle">Los expertos coinciden: el envejecimiento saludable requiere combinar varios tipos de movimiento. Esto es lo que recomienda la evidencia.</p>
+    <div class="donuts">
+      <div class="donut-item">
+        <svg class="donut-svg" viewBox="0 0 100 100">
+          <circle class="donut-bg" cx="50" cy="50" r="40"/>
+          <circle class="donut-fg" cx="50" cy="50" r="40" stroke-dasharray="251" stroke-dashoffset="63"/>
+          <text class="donut-text" x="50" y="50">75%</text>
+        </svg>
+        <div class="donut-label">Fuerza</div>
+        <p class="donut-desc">Esencial para prevenir sarcopenia, caídas y dependencia.</p>
+      </div>
+      <div class="donut-item">
+        <svg class="donut-svg" viewBox="0 0 100 100">
+          <circle class="donut-bg" cx="50" cy="50" r="40"/>
+          <circle class="donut-fg" cx="50" cy="50" r="40" stroke-dasharray="251" stroke-dashoffset="50"/>
+          <text class="donut-text" x="50" y="50">80%</text>
+        </svg>
+        <div class="donut-label">Aeróbico</div>
+        <p class="donut-desc">Protege corazón, cerebro y metabolismo.</p>
+      </div>
+      <div class="donut-item">
+        <svg class="donut-svg" viewBox="0 0 100 100">
+          <circle class="donut-bg" cx="50" cy="50" r="40"/>
+          <circle class="donut-fg" cx="50" cy="50" r="40" stroke-dasharray="251" stroke-dashoffset="75"/>
+          <text class="donut-text" x="50" y="50">70%</text>
+        </svg>
+        <div class="donut-label">Movilidad</div>
+        <p class="donut-desc">Flexibilidad articular y prevención del dolor.</p>
+      </div>
+      <div class="donut-item">
+        <svg class="donut-svg" viewBox="0 0 100 100">
+          <circle class="donut-bg" cx="50" cy="50" r="40"/>
+          <circle class="donut-fg" cx="50" cy="50" r="40" stroke-dasharray="251" stroke-dashoffset="88"/>
+          <text class="donut-text" x="50" y="50">65%</text>
+        </svg>
+        <div class="donut-label">Equilibrio</div>
+        <p class="donut-desc">Prevención de caídas, autonomía a largo plazo.</p>
+      </div>
+    </div>
+    <p style="font-family:'Cormorant Garamond',serif; font-size:15px; color:var(--text-muted); margin-top:24px; font-style:italic; text-align:center;">Porcentajes ilustrativos del peso recomendado de cada componente en un programa integral. La evidencia (ICFSR / OMS) apunta a programas multicomponente que integren todos estos elementos.</p>
+  </div>
+</section>
+
+<!-- ============ MENTAL ============ -->
+<section class="mental">
+  <span class="section-eyebrow">El cuerpo, vía rápida hacia la mente</span>
+  <h2 class="section-title">Mover el cuerpo<br><span class="italic-accent">regula la emoción</span></h2>
+  <p class="section-intro">
+    Cuando entiendes que la depresión, la ansiedad, el dolor crónico y la baja autoestima no son solo "mentales" —son procesos donde el cuerpo participa en cada paso— el movimiento deja de ser opcional. Es regulación del sistema nervioso, es química cerebral, es identidad recuperada.
+  </p>
+
+  <div class="mental-hero">
+    <div class="mental-text">
+      <p><strong>53,6% de pacientes con dolor crónico</strong> reportan reducción del dolor tras programas de ejercicio físico estructurado.</p>
+      <p><strong>80,1% de esos mismos pacientes</strong> reportan mejoras psicológicas asociadas al ejercicio: menos ansiedad, mejor estado de ánimo, mejor sueño, mayor calidad de vida.</p>
+      <p>El ejercicio actúa sobre múltiples vías a la vez: <strong>libera endorfinas</strong> (analgésicas y antiestrés), <strong>regula el cortisol</strong> (la hormona del estrés), <strong>estimula la neurogénesis</strong> (crea nuevas conexiones cerebrales) y <strong>aumenta serotonina</strong> (estabilidad emocional).</p>
+      <p style="color:var(--text-muted); font-size:15px; margin-top:24px; font-style:italic;">Fuentes: Revisión sistemática "Ejercicio en dolor crónico y factores psicológicos" (Redalyc, 2020). Mayo Clinic. Universidad de Boston, JAMA Network.</p>
+    </div>
+    <div class="mental-quote">
+      <p>La falta de actividad física es una amenaza silenciosa para la salud mundial. Necesitamos hacer la actividad física más accesible, asequible y agradable para todas las personas.</p>
+      <cite>— Dr. Rüdiger Krech · Director de Promoción de la Salud, OMS</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROTOCOLO ============ -->
+<section class="protocolo" id="protocolo">
+  <span class="section-eyebrow">Mi propuesta para ti</span>
+  <h2 class="section-title">Protocolo Integrativo<br><span class="italic-accent">de Movimiento</span></h2>
+  <p class="section-intro">
+    Toda esa evidencia científica no sirve de nada si no se traduce en un plan concreto, hecho para ti, que puedas hacer en casa, que se adapte a tu edad, a tu cuerpo, a tu momento vital. Eso es lo que hago contigo.
+  </p>
+
+  <div class="proto-intro">
+    <p>
+      Pensé este protocolo <strong>pensando en vosotros</strong>. En vuestro bienestar. En vuestro día a día. En la sensación de no saber por dónde empezar, en la frustración de los programas genéricos que no funcionan, en las dudas de qué hacer si tienes un dolor de espalda, si estás en menopausia, si pasas de los 60, si nunca has entrenado.
+      <br><br>
+      Mi compromiso es <strong>estar a vuestro lado</strong> en vuestro cuidado personal. No darte una lista de ejercicios y desaparecer, sino acompañarte con un programa diseñado a medida, con seguimiento, con explicaciones claras y con la certeza de que detrás hay experiencia, formación continua y una vocación clara por las terapias naturales.
+    </p>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; font-size:30px; color:var(--gold-bright); margin-bottom:24px; font-weight:500;">Los 4 pilares del Protocolo</h3>
+
+  <div class="pilares-grid">
+    <div class="pilar-card">
+      <div class="pilar-num">I</div>
+      <h4 class="pilar-name">Yoga Terapéutico</h4>
+      <p class="pilar-desc">Asanas adaptadas a tu cuerpo, con semáforo clínico individual. Trabaja flexibilidad, conciencia corporal, regulación del sistema nervioso y respiración.</p>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-num">II</div>
+      <h4 class="pilar-name">Fuerza Funcional</h4>
+      <p class="pilar-desc">El pilar irrenunciable para prevenir sarcopenia, osteoporosis y dependencia. Ejercicios con peso corporal o material mínimo, adaptados a tu nivel.</p>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-num">III</div>
+      <h4 class="pilar-name">Movilidad y CORE</h4>
+      <p class="pilar-desc">Articulaciones libres, columna sana, suelo pélvico fuerte. Hipopresivos, control postural y movilidad activa para una columna sin dolor.</p>
+    </div>
+    <div class="pilar-card">
+      <div class="pilar-num">IV</div>
+      <h4 class="pilar-name">Calistenia y Cardio</h4>
+      <p class="pilar-desc">Movimiento dinámico para corazón, pulmón y metabolismo. Progresiones adaptadas para todos los niveles, incluyendo opciones de muy baja exigencia.</p>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; font-size:26px; color:var(--gold-bright); margin-top:60px; margin-bottom:24px; font-weight:500;">Qué incluye tu programa personalizado</h3>
+
+  <div class="incluye-grid">
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Cuestionario de valoración inicial completo</div></div>
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Análisis de tu perfil físico y emocional</div></div>
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Programa en HTML imprimible y descargable</div></div>
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Calendario semanal en 3 fases progresivas</div></div>
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Modo Express para días de poco tiempo</div></div>
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Sistema de gamificación: XP y medallas</div></div>
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Radar de progreso interactivo</div></div>
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Suplementación natural personalizada</div></div>
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Hábitos de regulación del sistema nervioso</div></div>
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Lecturas recomendadas</div></div>
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Diario interactivo de práctica</div></div>
+    <div class="incluye-item"><span class="incluye-check">✓</span><div>Soporte y seguimiento por WhatsApp</div></div>
+  </div>
+</section>
+
+<!-- ============ MENSAJE ============ -->
+<section class="mensaje">
+  <div class="mensaje-content">
+    <span class="section-eyebrow">Un mensaje personal</span>
+    <h2 class="section-title">Pensando <span class="italic-accent">siempre</span> en vosotros</h2>
+    <p class="mensaje-text">
+      Llevo casi 15 años acompañando a personas en su proceso de salud. He visto cómo el dolor crónico se disuelve cuando empezamos a movernos con sentido. He visto a mujeres recuperar la energía perdida en la menopausia. He visto a personas mayores volver a caminar con la cabeza alta, sintiéndose útiles, fuertes, autónomas.
+      <br><br>
+      No hay magia. Hay método, paciencia y compromiso. <strong>El tuyo, y el mío.</strong>
+      <br><br>
+      Si me dejas, te acompaño.
+    </p>
+    <div class="mensaje-ornament">
+      <div class="mensaje-ornament-line"></div>
+      <div class="mensaje-ornament-diamond"></div>
+      <div class="mensaje-ornament-line"></div>
+    </div>
+    <div class="mensaje-firma">
+      Kiko Martínez
+      <span>Tu profesional del bienestar natural</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="cta-final">
+  <h2>¿<span class="italic-accent">Empezamos</span>?</h2>
+  <p>Solicita información sin compromiso y recibe tu cuestionario de valoración inicial. Estaré contigo en cada paso.</p>
+
+  <div class="cta-contact">
+    <p class="cta-contact-label">Contáctame por WhatsApp</p>
+    <a href="https://wa.me/34665865557" class="cta-contact-phone">665 865 557</a>
+  </div>
+
+  <div class="cta-buttons">
+    <a href="javascript:window.print()" class="btn-secondary">Imprimir esta página</a>
+  </div>
+</section>
+
+<footer>
+  <p><strong>KIKO MARTÍNEZ · BIENESTAR NATURAL</strong></p>
+  <p>Osteopatía · Coaching · Fitoterapia · Bienestar Integral</p>
+  <p style="margin-top:18px; font-size:10px; opacity:0.7;">Este contenido es divulgativo. El protocolo no sustituye ningún tratamiento médico. En presencia de patología consulta siempre con tu profesional sanitario.</p>
+</footer>
+
+<script>
+function toggleMusic() {
+  var audio = document.getElementById('bgMusic');
+  var btn = document.getElementById('musicBtn');
+  var title = document.getElementById('musicTitle');
+  if (audio.paused) {
+    var playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(function() {
+        btn.innerHTML = '❚❚';
+        title.textContent = 'Sonando · pausar';
+      }).catch(function(err) {
+        title.textContent = 'Añade tu archivo en /musica/ambiente.mp3';
+        btn.innerHTML = '▶';
+      });
+    }
+  } else {
+    audio.pause();
+    btn.innerHTML = '▶';
+    title.textContent = 'Música pausada';
+  }
+}
+
+// Fade-in elegante al hacer scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.stat-card, .disease-card, .envej-card, .pilar-card, .meno-stats, .mental-quote, .chart-wrapper, .proto-intro').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
